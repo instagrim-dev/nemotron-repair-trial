@@ -29,6 +29,19 @@ cd nemotron-repair-trial
 Python 3.10 or later and Git are required. There are no third-party Python
 dependencies. Run all local checks with `sh scripts/check.sh`.
 
+## Reproduce the captured demo without an API key
+
+```sh
+python3 -B -m demo.replay --output /tmp/nemotron-demo-first
+```
+
+Use a new output directory each time. The demo checks the bundled evidence,
+reproduces the baseline failure, applies the captured model patch to a fresh
+copy, and reruns the independent verifier. It makes no network or inference
+request. The captured candidate passes 3 visible cases and 2,049 independent
+regression cases. See [demo instructions](demo/README.md) for provenance and
+judge-facing reproduction steps.
+
 ## Run one repair trial
 
 Configure `NEBIUS_API_KEY` in the environment using an existing Token Factory

@@ -1,0 +1,18 @@
+{
+  "model": "nvidia/Nemotron-3_5-Lightning",
+  "temperature": 0,
+  "max_tokens": 4096,
+  "response_format": {
+    "type": "json_object"
+  },
+  "messages": [
+    {
+      "role": "system",
+      "content": "Repair only the authorized task.py. Return the requested JSON object only."
+    },
+    {
+      "role": "user",
+      "content": "SPECIFICATION\nRepair merge_intervals(intervals). Input is a list of (start, end) integer tuples\nwith start <= end. Return the union as a list of integer tuples, sorted by start,\nwith overlapping or touching intervals merged. Ignore zero-length intervals.\nNever mutate the input list or its elements. Empty input returns an empty list.\nOnly task.py may be replaced. Keep exactly one function named merge_intervals\nwith one parameter named intervals. Do not add imports, annotations, decorators,\nor module-level code. Allowed built-in calls: sorted, max, min, len, list, tuple.\nThe only allowed attribute access is the append method on a list. Use basic\nassignment, comparisons, conditionals, and for loops. Return JSON only, with the\nsingle key \"task.py\" containing the complete repaired file as a string.\n\nCURRENT task.py\ndef merge_intervals(intervals):\n    merged = []\n    for start, end in sorted(intervals):\n        if start == end:\n            continue\n        if merged and start <= merged[-1][1]:\n            merged[-1] = (merged[-1][0], end)\n        else:\n            merged.append((start, end))\n    return merged\n\nVISIBLE TESTS\n[\n  {\"name\":\"nested_interval\",\"input\":[[1,10],[2,3]],\"expected\":[[1,10]]},\n  {\"name\":\"disjoint_intervals\",\"input\":[[1,2],[4,5]],\"expected\":[[1,2],[4,5]]},\n  {\"name\":\"empty_input\",\"input\":[],\"expected\":[]}\n]\n"
+    }
+  ]
+}

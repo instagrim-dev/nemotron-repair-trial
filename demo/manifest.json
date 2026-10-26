@@ -1,0 +1,13 @@
+{
+  "format": "nemotron-recorded-demo-v1",
+  "files": {
+    "demo/evidence/baseline.py": "8fda558ce5df6305a6957055b1056b3035e8599020576221faebccc5a63ffc30",
+    "demo/evidence/candidate.py": "7f2ac4051b25dd7e171f805786a52acce16649075e5f3fba3a64dca4cfb4c78d",
+    "demo/evidence/candidate.patch": "231b27824ddddd21bb115eedd94345d0b0a634924b63fa1a5e074eabda5b9025",
+    "demo/evidence/request.json": "83271cf30f1cc01c11d586f3cde0912c183d129b457ed230c7993b36c83a3777",
+    "demo/evidence/response-summary.json": "0262ba9d89d2fe3a315a2cabd584f8d0afb628c9b8681d6f46c9e1978715ae2e",
+    "demo/evidence/recorded-run.json": "77ef7e5209613fd6c8896ab9d20df7a795fd9d82526a2ffb09b75a6870441b22",
+    "verifier/check.py": "d3d795a2a8e05c521e067d53b247dd6d2ce934413b54b4430d1846f91acf9689",
+    "workspace/interval_union/visible_tests.json": "d362e6ddc6dfdf00bff9ab93a1fe7aa145508ffc5c53974179913583c251494e"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "run-20261026T033427Z",
+  "started_at_utc": "2026-10-26T03:34:27.679494+00:00",
+  "provider": "Nebius Token Factory",
+  "model": "nvidia/Nemotron-3_5-Lightning",
+  "endpoint": "https://api.tokenfactory.nebius.com/v1",
+  "http_status": 200,
+  "response_id": "chatcmpl-43013779ca339f0430900bcbdc9058fd",
+  "source_revision": "4ce9c7e97dd0e8cad6e1214dd5096c4543454281",
+  "fixture_source_revision": "9719ac730a1ac8aac4ef2deb96b87c43e469487a",
+  "result_revision": "7174cd35d5d1136bd9d0d91d330956e634a7339f",
+  "candidate_sha256": "7f2ac4051b25dd7e171f805786a52acce16649075e5f3fba3a64dca4cfb4c78d",
+  "original_checker_sha256": "f5829e940d651660bd6edf4aa7a4b216c76102a8da6610da36b0399d53c6a26a",
+  "usage": {
+    "prompt_tokens": 374,
+    "completion_tokens": 2943,
+    "total_tokens": 3317
+  },
+  "baseline": {
+    "targeted": {
+      "passed": 2,
+      "failed": 1
+    },
+    "regression": {
+      "passed": 1785,
+      "failed": 264
+    }
+  },
+  "candidate": {
+    "targeted": {
+      "passed": 3,
+      "failed": 0
+    },
+    "regression": {
+      "passed": 2049,
+      "failed": 0
+    }
+  },
+  "original_acceptance_state": "ACCEPT",
+  "raw_response_sha256": "32ec930fc4c6d8a4a259d12d52ac6c0173b311d4ad9dc9058501c265265e5506",
+  "response_summary_scope": "Model identity, usage, and returned candidate only; raw reasoning remains in local run evidence.",
+  "claim_scope": "One successful synthetic repair cycle, evaluated on a finite independent check set."
+}
