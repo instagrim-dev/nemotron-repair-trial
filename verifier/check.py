@@ -141,6 +141,8 @@ if __name__ == '__main__':
     if len(sys.argv) == 3 and sys.argv[1] == '--worker':
         print(json.dumps(run_checks(sys.argv[2])))
     elif len(sys.argv) == 2:
-        print(json.dumps(verify_candidate(sys.argv[1]), indent=2))
+        report = verify_candidate(sys.argv[1])
+        print(json.dumps(report, indent=2))
+        sys.exit({'ACCEPT': 0, 'HOLD': 1, 'UNKNOWN': 2}[report['acceptance_state']])
     else:
         raise SystemExit('Usage: python3 -m verifier.check CANDIDATE')

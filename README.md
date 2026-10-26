@@ -68,6 +68,8 @@ To replay the verifier independently:
 python3 -B -m verifier.check ../../evidence-local/nemotron-first-run/candidate.py
 ```
 
+The verifier exits with code 0 for `ACCEPT`, 1 for `HOLD`, and 2 for `UNKNOWN`.
+
 ## Continuous integration
 
 Local validation is the primary check path. Hosted GitHub CI is unavailable

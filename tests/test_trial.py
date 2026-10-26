@@ -123,6 +123,15 @@ class RequestTests(unittest.TestCase):
 
 
 
+
+class VerifierCLITests(unittest.TestCase):
+    def test_rejected_baseline_returns_failure_exit_status(self):
+        result = subprocess.run([__import__('sys').executable, '-B', '-m', 'verifier.check',
+                                 'workspace/interval_union/task.py'], cwd=ROOT,
+                                text=True, capture_output=True)
+        self.assertEqual(json.loads(result.stdout)['acceptance_state'], 'HOLD')
+        self.assertEqual(result.returncode, 1)
+
 class TrialIntegrationTests(unittest.TestCase):
     def test_trial_records_independent_verdict_and_replayable_patch(self):
         with tempfile.TemporaryDirectory() as temp:
