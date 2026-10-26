@@ -1,6 +1,8 @@
 # Reproduce the recorded Nemotron repair
 
-This offline demo replays a real Nebius Token Factory response from October 25,
+For maintainers reviewing generated patches, this demo compares a broken
+baseline, an authored visible-passing overfit control, and a real saved repair.
+It replays a real Nebius Token Factory response from October 25,
 2026 Pacific time. It does not simulate a fresh model call. Python 3.10 or later
 and Git are the only requirements; no API key, installation, or project secrets
 are needed.
@@ -16,7 +18,7 @@ python3 -B -m demo.replay --output /tmp/nemotron-demo-first
 
 Choose a new output directory for every run. Exit zero means that the replay
 reproduced both the expected baseline rejection and candidate acceptance.
-`transcript.txt`, the replayed source, and complete verification reports are saved
+`review.md`, `transcript.txt`, the replayed source, and complete verification reports are saved
 in the chosen directory.
 
 ## What the demo checks
@@ -25,10 +27,20 @@ in the chosen directory.
 2. Match the candidate bytes to the returned `task.py` in the response summary.
 3. Confirm that the unchanged baseline returns HOLD: 2 of 3 visible cases and
    1,785 of 2,049 independent cases pass.
-4. Apply the saved patch to a temporary baseline copy using Git.
-5. Match the patched file digest to the captured candidate.
-6. Run the independent verifier again: all 3 visible and 2,049 independent
+4. Check an explicitly authored overfit control: all three visible examples pass,
+   but independent checking returns HOLD with an overlapping-interval counterexample.
+5. Apply the saved patch to a temporary baseline copy using Git.
+6. Match the patched file digest to the captured candidate.
+7. Run the independent verifier again: all 3 visible and 2,049 independent
    cases pass, including input-preservation checks.
+8. Recheck the same saved candidate on 321 longer-list cases added after the live
+   model run: lengths 4 through 19, deterministic seed 20261025. All pass. This
+   extension is separate from the original recorded 2,049-case result.
+
+The overfit control is authored adversarial input, not a second Nemotron output.
+The review report makes the maintainer decision concrete: HOLD the visible-green
+control, then inspect the exact patch and ACCEPT the captured repair on the
+bounded checks.
 
 ## Captured evidence
 

@@ -1,7 +1,7 @@
 # Nemotron Repair Trial
 
-A coding-agent hackathon project for Nebius/NVIDIA model execution, repair cycles,
-and independent repair evaluation.
+For maintainers reviewing AI-generated Python patches: inspect the change,
+reproduce its evidence, and decide whether to accept or hold it.
 
 ## Current status
 
@@ -38,8 +38,10 @@ python3 -B -m demo.replay --output /tmp/nemotron-demo-first
 Use a new output directory each time. The demo checks the bundled evidence,
 reproduces the baseline failure, applies the captured model patch to a fresh
 copy, and reruns the independent verifier. It makes no network or inference
-request. The captured candidate passes 3 visible cases and 2,049 independent
-regression cases. See [demo instructions](demo/README.md) for provenance and
+request. An authored overfit control passes all 3 visible examples but receives
+HOLD under independent checks. The real saved Nemotron repair receives ACCEPT: it
+passes the original 2,049 regression inputs plus 321 longer-list inputs added
+after the live run. See [demo instructions](demo/README.md) for provenance and
 judge-facing reproduction steps.
 
 ## Run one repair trial
@@ -63,7 +65,8 @@ is the replacement `task.py` source in a JSON object.
 The independent verifier checks the three visible cases, all 2,025 ordered
 interval pairs with integer endpoints from -4 through 4, and 24 selected triple
 permutations. Its oracle enumerates occupied integer cells rather than using the
-candidate's merging algorithm. Every case also checks for input mutation.
+candidate's merging algorithm. An additional deterministic post-run set covers
+321 lists of lengths 4 through 19. Every case also checks for input mutation.
 
 Evidence includes the request, sanitized response, model identity and usage,
 source and candidate Git revisions, file digests, replayable candidate patch,
@@ -100,7 +103,7 @@ access or project secrets. The optional manual workflow runs this same script;
 it is not required for local readiness.
 
 The local suite verifies candidate scope, independent checking, source integrity,
-and patch replay using a test-only response. A live trial requires the separate
+longer-list rejection, authored overfit rejection, and patch replay using a test-only response. A live trial requires the separate
 run command above; test doubles are never reported as live model evidence.
 
 ## License

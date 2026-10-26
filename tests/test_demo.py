@@ -27,6 +27,20 @@ class DemoTests(unittest.TestCase):
             self.assertEqual(result['mode'], 'offline_recorded_replay')
             self.assertTrue((Path(temp) / 'output/transcript.txt').is_file())
 
+    def test_demo_exposes_authored_visible_passing_overfit(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / 'output'
+            result = replay(output)
+            control = result['overfit_control']
+            self.assertEqual(control['origin'], 'authored_negative_control')
+            self.assertEqual(control['acceptance_state'], 'HOLD')
+            self.assertEqual(control['targeted'], {'passed': 3, 'failed': 0})
+            self.assertGreater(control['regression']['failed'], 0)
+            self.assertEqual(control['counterexample']['input'], [[1, 3], [2, 4]])
+            self.assertEqual(control['counterexample']['expected'], [[1, 4]])
+            self.assertEqual(result['candidate']['extended']['failed'], 0)
+            self.assertIn('AUTHORED OVERFIT CONTROL', (output / 'transcript.txt').read_text())
+
     def test_tampered_candidate_is_rejected_before_execution(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp) / 'source'

@@ -123,6 +123,7 @@ def run_trial(output, model):
                    'source_revision': metadata['source_revision'], 'result_revision': metadata['result_revision'],
                    'candidate_sha256': metadata['candidate_sha256'], 'checker_sha256': pins['verifier/check.py'],
                    'targeted': report.get('targeted'), 'regression': report.get('regression'),
+                   'extended': report.get('extended'),
                    'guard_error': report.get('guard_error'),
                    'scope': 'One synthetic repair attempt; not comparative model evaluation'}
     except (RuntimeError, ValueError, OSError, KeyError) as error:

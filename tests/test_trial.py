@@ -60,6 +60,15 @@ class VerifierTests(unittest.TestCase):
         self.assertEqual(report['targeted']['failed'], 0)
         self.assertGreater(report['regression']['failed'], 0)
 
+    def test_checker_rejects_candidate_that_breaks_on_longer_lists(self):
+        source = GOOD.replace('    result = []',
+                              '    if len(intervals) > 3:\n        return []\n    result = []')
+        report = self.check_source(source)
+        self.assertEqual(report['acceptance_state'], 'HOLD')
+        self.assertEqual(report['targeted']['failed'], 0)
+        self.assertEqual(report['regression']['failed'], 0)
+        self.assertGreater(report['extended']['failed'], 0)
+
     def test_candidate_cannot_execute_module_side_effect(self):
         with tempfile.TemporaryDirectory() as temp:
             marker = Path(temp) / 'side_effect'

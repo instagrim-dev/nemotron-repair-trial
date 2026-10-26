@@ -3,6 +3,7 @@ import ast
 import hashlib
 import itertools
 import json
+import random
 from pathlib import Path
 import subprocess
 import sys
@@ -106,15 +107,28 @@ def run_checks(path):
         for j, permutation in enumerate(itertools.permutations(triple)):
             regression.append(check_case(function, f'triple_{i}_{j}', list(permutation),
                                          occupancy_oracle(permutation)))
+    # Post-run coverage extension: preserve the original 2,049-case group.
+    # These cases were added after the captured model run, not shown to it.
+    rng = random.Random(20261025)
+    longer = [[(0, 1), (2, 3), (4, 5), (6, 7)]]
+    for length in range(4, 20):
+        for _ in range(20):
+            longer.append([tuple(sorted((rng.randint(-12, 12), rng.randint(-12, 12))))
+                           for _ in range(length)])
+    extended = [check_case(function, f'longer_{i}', value, occupancy_oracle(value))
+                for i, value in enumerate(longer)]
     def group(cases, include_passes=False):
         failures = [case for case in cases if not case['passed']]
         return {'passed': len(cases) - len(failures), 'failed': len(failures),
                 'cases': cases if include_passes else failures[:10]}
     target_report = group(targeted, True)
     regression_report = group(regression)
-    return {'acceptance_state': 'ACCEPT' if not target_report['failed'] and not regression_report['failed'] else 'HOLD',
-            'targeted': target_report, 'regression': regression_report,
-            'oracle_scope': 'integer endpoints -4..4; all ordered pairs plus 24 triple permutations'}
+    extended_report = group(extended)
+    return {'acceptance_state': 'ACCEPT' if not target_report['failed'] and not regression_report['failed'] and not extended_report['failed'] else 'HOLD',
+            'targeted': target_report, 'regression': regression_report, 'extended': extended_report,
+            'illustrative_case': next(case for case in regression
+                                      if case['input'] == [(1, 3), (2, 4)]),
+            'oracle_scope': 'original 2049 cases plus 321 post-run longer-list cases, lengths 4..19, seed 20261025'}
 
 
 def verify_candidate(path):
