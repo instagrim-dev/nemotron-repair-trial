@@ -1,0 +1,10 @@
+Repair merge_intervals(intervals). Input is a list of (start, end) integer tuples
+with start <= end. Return the union as a list of integer tuples, sorted by start,
+with overlapping or touching intervals merged. Ignore zero-length intervals.
+Never mutate the input list or its elements. Empty input returns an empty list.
+Only task.py may be replaced. Keep exactly one function named merge_intervals
+with one parameter named intervals. Do not add imports, annotations, decorators,
+or module-level code. Allowed built-in calls: sorted, max, min, len, list, tuple.
+The only allowed attribute access is the append method on a list. Use basic
+assignment, comparisons, conditionals, and for loops. Return JSON only, with the
+single key "task.py" containing the complete repaired file as a string.

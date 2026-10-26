@@ -9,3 +9,4 @@ for directory in agent providers/nebius workspace verifier evaluation; do
   test -d "$directory"
 done
 printf 'Scaffold checks passed.\n'
+python3 -B -m unittest discover -s tests -v

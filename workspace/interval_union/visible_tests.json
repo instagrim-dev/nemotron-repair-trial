@@ -1,0 +1,5 @@
+[
+  {"name":"nested_interval","input":[[1,10],[2,3]],"expected":[[1,10]]},
+  {"name":"disjoint_intervals","input":[[1,2],[4,5]],"expected":[[1,2],[4,5]]},
+  {"name":"empty_input","input":[],"expected":[]}
+]
